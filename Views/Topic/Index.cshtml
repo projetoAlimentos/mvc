@@ -27,6 +27,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Module)
             </th>
+            <th>Questões</th>
             <th></th>
         </tr>
     </thead>
@@ -47,6 +48,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Module.Id)
+            </td>
+            <td>
+                <a asp-action="Index" asp-controller="Question" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Ver questões</a>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
