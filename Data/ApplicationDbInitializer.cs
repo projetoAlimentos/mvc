@@ -7,7 +7,7 @@ namespace projeto.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             context.SaveChanges();
