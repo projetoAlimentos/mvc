@@ -60,7 +60,7 @@ namespace projeto.Controllers
     }
 
     // GET: Topic/Create
-    [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Details/{TopicId}")]
+    [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Create")]
     public IActionResult Create()
     {
       ViewData["ModuleId"] = new SelectList(_context.Module, "Id", "Id");

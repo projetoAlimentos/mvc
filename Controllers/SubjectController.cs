@@ -28,15 +28,15 @@ namespace projeto.Controllers
         }
 
         // GET: Subject/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? SubjectId)
         {
-            if (id == null)
+            if (SubjectId == null)
             {
                 return NotFound();
             }
 
             var subject = await _context.Subject
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == SubjectId);
             if (subject == null)
             {
                 return NotFound();
@@ -68,14 +68,14 @@ namespace projeto.Controllers
         }
 
         // GET: Subject/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? SubjectId)
         {
-            if (id == null)
+            if (SubjectId == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subject.SingleOrDefaultAsync(m => m.Id == id);
+            var subject = await _context.Subject.SingleOrDefaultAsync(m => m.Id == SubjectId);
             if (subject == null)
             {
                 return NotFound();
@@ -88,9 +88,9 @@ namespace projeto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Subject subject)
+        public async Task<IActionResult> Edit(int SubjectId, [Bind("Id,Name,Description")] Subject subject)
         {
-            if (id != subject.Id)
+            if (SubjectId != subject.Id)
             {
                 return NotFound();
             }
@@ -119,15 +119,15 @@ namespace projeto.Controllers
         }
 
         // GET: Subject/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? SubjectId)
         {
-            if (id == null)
+            if (SubjectId == null)
             {
                 return NotFound();
             }
 
             var subject = await _context.Subject
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == SubjectId);
             if (subject == null)
             {
                 return NotFound();
@@ -139,17 +139,17 @@ namespace projeto.Controllers
         // POST: Subject/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int SubjectId)
         {
-            var subject = await _context.Subject.SingleOrDefaultAsync(m => m.Id == id);
+            var subject = await _context.Subject.SingleOrDefaultAsync(m => m.Id == SubjectId);
             _context.Subject.Remove(subject);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubjectExists(int id)
+        private bool SubjectExists(int SubjectId)
         {
-            return _context.Subject.Any(e => e.Id == id);
+            return _context.Subject.Any(e => e.Id == SubjectId);
         }
     }
 }
