@@ -32,7 +32,7 @@ namespace projeto.Controllers
       }
       else
       {
-        var applicationDbContext = _context.Question.Include(q => q.Topic).
+        var applicationDbContext = _context.Question.Include(q => q.Topic).Include(q => q.Topic.Module).
             Where(q => q.TopicId == TopicId);
         return View(await applicationDbContext.ToListAsync());
       }
