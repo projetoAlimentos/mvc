@@ -3,16 +3,20 @@ using System.Linq;
 
 namespace projeto.Data
 {
-    public static class ApplicationDbInitializer
+  public static class ApplicationDbInitializer
+  {
+    public static void Initialize(ApplicationDbContext context)
     {
-        public static void Initialize(ApplicationDbContext context)
-        {
-            //context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+      //context.Database.EnsureDeleted();
+      context.Database.EnsureCreated();
 
-            context.SaveChanges();
-
-            //context.SaveChanges();
-        }
+      // if (!context.IdentityRole.Any()) {
+      //   context.IdentityRole.Add(new IdentityRole { Name = "Administrador"});
+      //   context.IdentityRole.Add(new IdentityRole { Name = "Professor"});
+      //   context.IdentityRole.Add(new IdentityRole { Name = "Assistente"});
+      //   context.IdentityRole.Add(new IdentityRole { Name = "Aluno"});
+      // }
+      context.SaveChanges();
     }
+  }
 }
