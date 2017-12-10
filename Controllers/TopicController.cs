@@ -23,9 +23,9 @@ namespace projeto.Controllers
 
     // GET: Topic
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic")]
-    public async Task<IActionResult> Index(int? id)
+    public async Task<IActionResult> Index(int? ModuleId)
     {
-      if (id == null)
+      if (ModuleId == null)
       {
         var applicationDbContext = _context.Topic.Include(t => t.Module);
         return View(await applicationDbContext.ToListAsync());
@@ -34,7 +34,7 @@ namespace projeto.Controllers
       {
         var applicationDbContext = _context.Topic.
             Include(t => t.Module).
-            Where(t => t.ModuleId == id);
+            Where(t => t.ModuleId == ModuleId);
         return View(await applicationDbContext.ToListAsync());
       }
     }
