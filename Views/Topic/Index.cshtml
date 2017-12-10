@@ -53,9 +53,9 @@
                 <a asp-action="Index" asp-controller="Question" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Ver questões</a>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Edit</a> |
+                <a asp-action="Details" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Details</a> |
+                <a asp-action="Delete" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Delete</a>
             </td>
         </tr>
 }
