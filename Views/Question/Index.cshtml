@@ -12,18 +12,19 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Difficulty)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Hint)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Active)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Difficulty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th>Respostas</th>
             <th>
                 @Html.DisplayNameFor(model => model.Topic)
             </th>
@@ -49,9 +50,12 @@
                 @Html.DisplayFor(modelItem => item.Topic.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Index" asp-controller="Answer" asp-route-QuestionId="@item.Id" asp-route-TopicId="@item.TopicId" asp-route-ModuleId="@item.Topic.ModuleId" asp-route-SubjectId="@item.Topic.Module.SubjectId">Ver respostas</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-QuestionId="@item.Id" asp-route-TopicId="@item.TopicId" asp-route-ModuleId="@item.Topic.ModuleId" asp-route-SubjectId="@item.Topic.Module.SubjectId">Edit</a> |
+                <a asp-action="Details" asp-route-QuestionId="@item.Id" asp-route-TopicId="@item.TopicId" asp-route-ModuleId="@item.Topic.ModuleId" asp-route-SubjectId="@item.Topic.Module.SubjectId">Details</a> |
+                <a asp-action="Delete" asp-route-QuestionId="@item.Id" asp-route-TopicId="@item.TopicId" asp-route-ModuleId="@item.Topic.ModuleId" asp-route-SubjectId="@item.Topic.Module.SubjectId">Delete</a>
             </td>
         </tr>
 }
