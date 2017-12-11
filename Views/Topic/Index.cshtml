@@ -1,13 +1,13 @@
 @model IEnumerable<projeto.Models.Topic>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tópicos";
 }
 
-<h2>Index</h2>
+<h2>Tópicos</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Cadastrar novo tópico</a>
 </p>
 <table class="table">
     <thead>
@@ -53,9 +53,9 @@
                 <a asp-action="Index" asp-controller="Question" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Ver questões</a>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Edit</a> |
-                <a asp-action="Details" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Details</a> |
-                <a asp-action="Delete" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Delete</a>
+                <a asp-action="Edit" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Editar</a> |
+                <a asp-action="Details" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-TopicId="@item.Id" asp-route-ModuleId="@item.Module.Id" asp-route-SubjectId="@item.Module.SubjectId">Remover</a>
             </td>
         </tr>
 }

@@ -1,14 +1,14 @@
 @model projeto.Models.Question
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Deletar";
 }
 
-<h2>Delete</h2>
+<h2>Deletar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que deseja remover?</h3>
 <div>
-    <h4>Question</h4>
+    <h4>Pergunta</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -45,7 +45,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Remover" class="btn btn-default" /> |
+        <a asp-action="Index">Voltar à listagem</a>
     </form>
 </div>
