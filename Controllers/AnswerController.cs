@@ -23,6 +23,7 @@ namespace projeto.Controllers
 
     // GET: Answer
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public async Task<IActionResult> Index(int? AnswerId)
     {
       if (AnswerId == null)
@@ -40,6 +41,7 @@ namespace projeto.Controllers
 
     // GET: Answer/Details/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/{AnswerId}")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public async Task<IActionResult> Details(int? AnswerId)
     {
       if (AnswerId == null)
@@ -60,6 +62,7 @@ namespace projeto.Controllers
 
     // GET: Answer/Create
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/Create")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public IActionResult Create()
     {
       ViewData["QuestionId"] = new SelectList(_context.Question, "Id", "Id");
@@ -70,6 +73,7 @@ namespace projeto.Controllers
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/Create")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(int? QuestionId,[Bind("Id,Description,Correct,QuestionId")] Answer answer)
     {
@@ -86,6 +90,7 @@ namespace projeto.Controllers
 
     // GET: Answer/Edit/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/Edit/{AnswerId}")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public async Task<IActionResult> Edit(int? AnswerId)
     {
       if (AnswerId == null)
@@ -106,6 +111,7 @@ namespace projeto.Controllers
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/Edit/{AnswerId}")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int AnswerId, [Bind("Id,Description,Correct,QuestionId")] Answer answer)
     {
@@ -140,6 +146,7 @@ namespace projeto.Controllers
 
     // GET: Answer/Delete/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/Delete/{AnswerId}")]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> Delete(int? id)
     {
       if (id == null)
@@ -162,6 +169,7 @@ namespace projeto.Controllers
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer/Delete/{AnswerId}"), 
         ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> DeleteConfirmed(int AnswerId)
     {
       var answer = await _context.Answer.SingleOrDefaultAsync(m => m.Id == AnswerId);

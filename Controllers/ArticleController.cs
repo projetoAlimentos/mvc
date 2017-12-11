@@ -22,12 +22,14 @@ namespace projeto.Controllers
         }
 
         // GET: Article
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Article.ToListAsync());
         }
 
         // GET: Article/Details/5
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +48,7 @@ namespace projeto.Controllers
         }
 
         // GET: Article/Create
+        [Authorize(Roles = "Administrador,Professor")]
         public IActionResult Create()
         {
             return View();
@@ -56,6 +59,7 @@ namespace projeto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> Create([Bind("Id,Body,Video")] Article article)
         {
             if (ModelState.IsValid)
@@ -68,6 +72,7 @@ namespace projeto.Controllers
         }
 
         // GET: Article/Edit/5
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,6 +93,7 @@ namespace projeto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Body,Video")] Article article)
         {
             if (id != article.Id)
@@ -119,6 +125,7 @@ namespace projeto.Controllers
         }
 
         // GET: Article/Delete/5
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,6 +146,7 @@ namespace projeto.Controllers
         // POST: Article/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador,Professor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var article = await _context.Article.SingleOrDefaultAsync(m => m.Id == id);

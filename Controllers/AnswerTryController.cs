@@ -11,7 +11,7 @@ using projeto.Models;
 
 namespace projeto.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class AnswerTryController : Controller
     {
         private readonly ApplicationDbContext _context;

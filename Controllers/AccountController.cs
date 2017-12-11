@@ -237,18 +237,18 @@ namespace projeto.Controllers
       {
         var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);
+        await _userManager.AddToRoleAsync(user, "Aluno");
+        await _context.SaveChangesAsync();
         if (result.Succeeded)
         {
-          _logger.LogInformation("User created a new account with password.");
+          _logger.LogInformation("Conta de Aluno Criada.");
 
           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
           var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
           await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
           await _signInManager.SignInAsync(user, isPersistent: false);
-          _logger.LogInformation("User created a new account with password.");
-
-          await _userManager.AddToRoleAsync(user, "Admin");
+          _logger.LogInformation("Conta de Aluno Criada.");
 
           return RedirectToLocal(returnUrl);
         }
@@ -478,6 +478,7 @@ namespace projeto.Controllers
     }
 
     // GET: ApplicationUser
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Index()
     {
       var applicationDbContext = _context.ApplicationUser.Include(a => a.IdentityRole).Include(a => a.SubjectUser);
@@ -485,6 +486,7 @@ namespace projeto.Controllers
     }
 
     // GET: ApplicationUser/Details/5
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Details(string id)
     {
       if (id == null)
@@ -505,6 +507,7 @@ namespace projeto.Controllers
     }
 
     // GET: ApplicationUser/Create
+    [Authorize(Roles = "Administrador")]
     public IActionResult Create()
     {
       ViewData["IdentityRoleId"] = new SelectList(_context.IdentityRole, "Id", "Id");
@@ -517,6 +520,7 @@ namespace projeto.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Create([Bind("Name,ProfileImage,SubjectUserId,IdentityRoleId,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
     {
       if (ModelState.IsValid)
@@ -531,6 +535,7 @@ namespace projeto.Controllers
     }
 
     // GET: ApplicationUser/Edit/5
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Edit(string id)
     {
       if (id == null)
@@ -553,7 +558,8 @@ namespace projeto.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(string id, [Bind("Name,ProfileImage,SubjectUserId,IdentityRoleId,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+    [Authorize(Roles = "Administrador")]
+    public async Task<IActionResult> Edit(string id, [Bind("Name,ProfileImage,SubjectUserId,IdentityRoleId,IdentityRole,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
     {
       if (id != applicationUser.Id)
       {
@@ -565,6 +571,12 @@ namespace projeto.Controllers
         try
         {
           _context.Update(applicationUser);
+
+          //var roleId = applicationUser.IdentityRoleId;
+
+          var role = await _context.IdentityRole.FirstOrDefaultAsync(r => r.Id == applicationUser.IdentityRoleId);
+
+          await _userManager.AddToRoleAsync(applicationUser, role.Name);
           await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
@@ -586,6 +598,7 @@ namespace projeto.Controllers
     }
 
     // GET: ApplicationUser/Delete/5
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Delete(string id)
     {
       if (id == null)
@@ -608,6 +621,7 @@ namespace projeto.Controllers
     // POST: ApplicationUser/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> DeleteConfirmed(string id)
     {
       var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);

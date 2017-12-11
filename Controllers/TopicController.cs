@@ -23,6 +23,7 @@ namespace projeto.Controllers
 
     // GET: Topic
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic")]
+    [Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
     public async Task<IActionResult> Index(int? ModuleId)
     {
       if (ModuleId == null)
@@ -41,6 +42,7 @@ namespace projeto.Controllers
 
     // GET: Topic/Details/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Details/{TopicId}")]
+    [Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
     public async Task<IActionResult> Details(int? TopicId)
     {
       if (TopicId == null)
@@ -61,6 +63,7 @@ namespace projeto.Controllers
 
     // GET: Topic/Create
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Create")]
+    [Authorize(Roles = "Administrador,Professor")]
     public IActionResult Create()
     {
       ViewData["ModuleId"] = new SelectList(_context.Module, "Id", "Id");
@@ -72,6 +75,7 @@ namespace projeto.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Create")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> Create(int? ModuleId, [Bind("Id,Name,Description,ModuleId,Active,Difficulty")] Topic topic)
     {
       if (ModelState.IsValid)
@@ -87,6 +91,7 @@ namespace projeto.Controllers
 
     // GET: Topic/Edit/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Edit/{TopicId}")]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> Edit(int? TopicId)
     {
       if (TopicId == null)
@@ -108,6 +113,7 @@ namespace projeto.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Edit/{TopicId}")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> Edit(int TopicId, [Bind("Id,Name,Description,ModuleId,Active,Difficulty")] Topic topic)
     {
       if (TopicId != topic.Id)
@@ -141,6 +147,7 @@ namespace projeto.Controllers
 
     // GET: Topic/Delete/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Delete/{TopicId}")]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> Delete(int? TopicId)
     {
       if (TopicId == null)
@@ -162,6 +169,7 @@ namespace projeto.Controllers
     // POST: Topic/Delete/5
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Delete/{TopicId}"), ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> DeleteConfirmed(int TopicId)
     {
       var topic = await _context.Topic.SingleOrDefaultAsync(m => m.Id == TopicId);

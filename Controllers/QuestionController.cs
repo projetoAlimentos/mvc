@@ -23,6 +23,7 @@ namespace projeto.Controllers
 
     // GET: Question
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question")]
+    [Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
     public async Task<IActionResult> Index(int? TopicId)
     {
       if (TopicId == null)
@@ -40,6 +41,7 @@ namespace projeto.Controllers
 
     // GET: Question/Details/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}")]
+    [Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
     public async Task<IActionResult> Details(int? QuestionId)
     {
       if (QuestionId == null)
@@ -60,6 +62,7 @@ namespace projeto.Controllers
 
     // GET: Question/Create
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Create")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public IActionResult Create()
     {
       ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id");
@@ -71,6 +74,7 @@ namespace projeto.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Create")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public async Task<IActionResult> Create(int TopicId, [Bind("Id,Difficulty,Description,Hint,Active,TopicId")] Question question)
     {
       if (ModelState.IsValid)
@@ -86,6 +90,7 @@ namespace projeto.Controllers
 
     // GET: Question/Edit/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Edit/{QuestionId}")]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public async Task<IActionResult> Edit(int? QuestionId)
     {
       if (QuestionId == null)
@@ -107,6 +112,7 @@ namespace projeto.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Edit/{QuestionId}")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor,Assistente")]
     public async Task<IActionResult> Edit(int QuestionId, [Bind("Id,Difficulty,Description,Hint,Active,TopicId")] Question question)
     {
       if (QuestionId != question.Id)
@@ -140,6 +146,7 @@ namespace projeto.Controllers
 
     // GET: Question/Delete/5
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Delete/{QuestionId}")]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> Delete(int? QuestionId)
     {
       if (QuestionId == null)
@@ -161,6 +168,7 @@ namespace projeto.Controllers
     // POST: Question/Delete/5
     [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Delete/{QuestionId}"), ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrador,Professor")]
     public async Task<IActionResult> DeleteConfirmed(int QuestionId)
     {
       var question = await _context.Question.SingleOrDefaultAsync(m => m.Id == QuestionId);
