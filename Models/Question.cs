@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace projeto.Models
 {
@@ -7,10 +8,13 @@ namespace projeto.Models
     {
         public int Id { get; set; }
 
+        [Display(Name="Dificuldade")]
         public int Difficulty { get; set; }
 
+        [Display(Name="Enunciado")]
         public String Description { get; set; }
 
+        [Display(Name="Dica")]
         public String Hint { get; set; }
 
         public virtual ICollection<Answer> Answers { get; set; }

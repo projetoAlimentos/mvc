@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace projeto.Models
 {
@@ -6,8 +7,10 @@ namespace projeto.Models
     {
         public int Id { get; set; }
 
+        [Display(Name="Conteúdo")]
         public String Body { get; set; }
 
+        [Display(Name="Vídeo")]
         public String Video { get; set; }
 
     }

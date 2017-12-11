@@ -13,9 +13,11 @@ namespace projeto.Models
   public class ApplicationUser : IdentityUser
   {
 
+    [Display(Name="Nome")]
     public String Name { get; set; }
 
     [Column(TypeName = "blob")]
+    [Display(Name="Imagem de perfil")]
     public byte[] ProfileImage { get; set; }
 
     public int? SubjectUserId { get; set; }
