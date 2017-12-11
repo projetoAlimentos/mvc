@@ -25,9 +25,6 @@
                 @Html.DisplayNameFor(model => model.Active)
             </th>
             <th>Respostas</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Topic)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,9 +42,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Topic.Id)
             </td>
             <td>
                 <a asp-action="Index" asp-controller="Answer" asp-route-QuestionId="@item.Id" asp-route-TopicId="@item.TopicId" asp-route-ModuleId="@item.Topic.ModuleId" asp-route-SubjectId="@item.Topic.Module.SubjectId">Ver respostas</a>

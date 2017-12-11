@@ -11,7 +11,7 @@ using projeto.Models;
 
 namespace projeto.Controllers
 {
-  [Authorize(Roles = "Admin")]
+  
   public class AnswerController : Controller
   {
     private readonly ApplicationDbContext _context;
@@ -24,19 +24,11 @@ namespace projeto.Controllers
     // GET: Answer
     [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/{QuestionId}/Answer")]
     [Authorize(Roles = "Administrador,Professor,Assistente")]
-    public async Task<IActionResult> Index(int? AnswerId)
+    public async Task<IActionResult> Index(int? QuestionId)
     {
-      if (AnswerId == null)
-      {
-        var applicationDbContext = _context.Answer.Include(a => a.Question);
-        return View(await applicationDbContext.ToListAsync());
-      }
-      else
-      {
-        var applicationDbContext = _context.Answer.Include(a => a.Question).
-            Where(a => a.QuestionId == AnswerId);
-        return View(await applicationDbContext.ToListAsync());
-      }
+      var applicationDbContext = _context.Answer.Include(a => a.Question).
+          Where(a => a.QuestionId == QuestionId);
+      return View(await applicationDbContext.ToListAsync());
     }
 
     // GET: Answer/Details/5

@@ -55,9 +55,9 @@ namespace projeto.Controllers
     // POST: Subject/Create
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrador,Professor")]
+    [HttpPost("/Subject/Create")]
     public async Task<IActionResult> Create([Bind("Id,Name,Description")] Subject subject)
     {
       if (ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace projeto.Controllers
 
     // GET: Subject/Edit/5
     [Authorize(Roles = "Administrador,Professor")]
-
+    [HttpGet("/Subject/Edit/{SubjectId}")]
     public async Task<IActionResult> Edit(int? SubjectId)
     {
       if (SubjectId == null)
@@ -90,9 +90,9 @@ namespace projeto.Controllers
     // POST: Subject/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrador,Professor")]
+    [HttpPost("/Subject/Edit/{SubjectId}")]
     public async Task<IActionResult> Edit(int SubjectId, [Bind("Id,Name,Description")] Subject subject)
     {
       if (SubjectId != subject.Id)
@@ -125,6 +125,7 @@ namespace projeto.Controllers
 
     // GET: Subject/Delete/5
     [Authorize(Roles = "Administrador")]
+    [HttpGet("/Subject/Delete/{SubjectId}")]
     public async Task<IActionResult> Delete(int? SubjectId)
     {
       if (SubjectId == null)
@@ -143,9 +144,9 @@ namespace projeto.Controllers
     }
 
     // POST: Subject/Delete/5
-    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrador")]
+    [HttpPost("/Subject/Delete/{SubjectId}")]
     public async Task<IActionResult> DeleteConfirmed(int SubjectId)
     {
       var subject = await _context.Subject.SingleOrDefaultAsync(m => m.Id == SubjectId);
