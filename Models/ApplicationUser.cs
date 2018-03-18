@@ -9,23 +9,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace projeto.Models
 {
-  // Add profile data for application users by adding properties to the ApplicationUser class
-  public class ApplicationUser : IdentityUser
-  {
+    // Add profile data for application users by adding properties to the ApplicationUser class
+    public class ApplicationUser : IdentityUser
+    {
 
-    [Display(Name="Nome")]
-    public String Name { get; set; }
+        [Display(Name="Nome")]
+        public String Name { get; set; }
 
-    [Column(TypeName = "blob")]
-    [Display(Name="Imagem de perfil")]
-    public byte[] ProfileImage { get; set; }
+        [Column(TypeName = "blob")]
+        [Display(Name="Imagem de perfil")]
+        public byte[] ProfileImage { get; set; }
 
-    public int? SubjectUserId { get; set; }
+        public int? SubjectUserId { get; set; }
 
-    public SubjectUser SubjectUser { get; set; }
+        public SubjectUser SubjectUser { get; set; }
 
-    public string IdentityRoleId { get; set; }
+        public string IdentityRoleId { get; set; }
 
-    public virtual IdentityRole IdentityRole { get; set; }
-  }
+        public virtual IdentityRole IdentityRole { get; set; }
+    }
 }

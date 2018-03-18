@@ -18,7 +18,6 @@ using projeto.Services;
 
 namespace projeto.Api
 {
-
     [Route("api/[controller]")]
     public class AccountApi : Controller
     {
