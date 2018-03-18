@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace projeto.Models
 {
-    public class AnswerTry
+    public class AnswerAttempt
     {
         public int Id { get; set; }
 

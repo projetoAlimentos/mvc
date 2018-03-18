@@ -14,7 +14,7 @@ namespace projeto.Models
 
         public Topic topico { get; set; }
 
-        public virtual ICollection<AnswerTry> AnswerTry { get; set; }
+        public virtual ICollection<AnswerAttempt> AnswerAttempt { get; set; }
     }
 }
 

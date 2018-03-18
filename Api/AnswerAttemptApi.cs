@@ -20,11 +20,11 @@ namespace projeto.Api
 {
 
     [Route("api/[controller]")]
-    public class AnswerTryTryApi : Controller
+    public class AnswerAttemptApi : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AnswerTryTryApi(ApplicationDbContext context)
+        public AnswerAttemptApi(ApplicationDbContext context)
         {
           _context = context;
         }
@@ -32,26 +32,26 @@ namespace projeto.Api
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<AnswerTry> Get(int id)
+        public async Task<AnswerAttempt> Get(int id)
         {
-            var answerTry = await _context.AnswerTry
+            var answerAttempt = await _context.AnswerAttempt
                 .SingleOrDefaultAsync(m => m.Id == id);
-            return answerTry;
+            return answerAttempt;
         }
 
         // POST api/values
         [HttpPost]
-        public async void Post([FromBody]AnswerTry answerTry)
+        public async void Post([FromBody]AnswerAttempt answerAttempt)
         {
-            _context.Add(answerTry);
+            _context.Add(answerAttempt);
             await _context.SaveChangesAsync();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody]AnswerTry answerTry)
+        public async void Put(int id, [FromBody]AnswerAttempt answerAttempt)
         {
-            _context.Update(answerTry);
+            _context.Update(answerAttempt);
             await _context.SaveChangesAsync();
         }
 
@@ -59,9 +59,9 @@ namespace projeto.Api
         [HttpDelete("{id}")]
         public async void Delete(int id)
         {
-            var answerTry = await _context.AnswerTry
+            var answerAttempt = await _context.AnswerAttempt
                 .SingleOrDefaultAsync(m => m.Id == id);
-            _context.Remove(answerTry);
+            _context.Remove(answerAttempt);
             await _context.SaveChangesAsync();
         }
     }
