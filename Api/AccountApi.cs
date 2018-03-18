@@ -81,6 +81,7 @@ namespace projeto.Api
               .Include(a => a.SubjectUser)
               .SingleOrDefaultAsync(m => m.Id == id);
           _context.Remove(applicationUser);
+          await _context.SaveChangesAsync();
         }
     }
 }

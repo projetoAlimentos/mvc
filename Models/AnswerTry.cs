@@ -11,7 +11,7 @@ namespace projeto.Models
 
         public virtual ICollection<Answer> Answers { get; set; }
 
-        public Try Try { get; set; }
+        public Attempt Attempt { get; set; }
 
     }
 }

@@ -29,37 +29,39 @@ namespace projeto.Api
           _context = context;
         }
 
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<ApplicationUser> GetAsync()
-        {
-            var accountList = _context.ApplicationUser.Include(a => a.IdentityRole).Include(a => a.SubjectUser);
-            return accountList.ToList();
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Subject> Get(int id)
         {
-            return "value";
+            var subject = await _context.Subject
+                .SingleOrDefaultAsync(m => m.Id == id);
+            return subject;
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async void Post([FromBody]Subject subject)
         {
+            _context.Add(subject);
+            await _context.SaveChangesAsync();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async void Put(int id, [FromBody]Subject subject)
         {
+            _context.Update(subject);
+            await _context.SaveChangesAsync();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(int id)
         {
+            var subject = await _context.Subject
+                .SingleOrDefaultAsync(m => m.Id == id);
+            _context.Remove(subject);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -13,23 +13,23 @@ namespace projeto.Controllers
 {
   [Authorize(Roles = "Administrador")]
 
-  public class TryController : Controller
+  public class AttemptController : Controller
   {
     private readonly ApplicationDbContext _context;
 
-    public TryController(ApplicationDbContext context)
+    public AttemptController(ApplicationDbContext context)
     {
       _context = context;
     }
 
-    // GET: Try
+    // GET: Attempt
     public async Task<IActionResult> Index()
     {
-      var applicationDbContext = _context.Try.Include(t => t.topico);
+      var applicationDbContext = _context.Attempt.Include(t => t.topico);
       return View(await applicationDbContext.ToListAsync());
     }
 
-    // GET: Try/Details/5
+    // GET: Attempt/Details/5
     public async Task<IActionResult> Details(int? id)
     {
       if (id == null)
@@ -37,42 +37,42 @@ namespace projeto.Controllers
         return NotFound();
       }
 
-      var ttry = await _context.Try
+      var attempt = await _context.Attempt
           .Include(t => t.topico)
           .SingleOrDefaultAsync(m => m.Id == id);
-      if (ttry == null)
+      if (attempt == null)
       {
         return NotFound();
       }
 
-      return View(ttry);
+      return View(attempt);
     }
 
-    // GET: Try/Create
+    // GET: Attempt/Create
     public IActionResult Create()
     {
       ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id");
       return View();
     }
 
-    // POST: Try/Create
+    // POST: Attempt/Create
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,ApplicationUserId,TopicId")] Try ttry)
+    public async Task<IActionResult> Create([Bind("Id,ApplicationUserId,TopicId")] Attempt attempt)
     {
       if (ModelState.IsValid)
       {
-        _context.Add(ttry);
+        _context.Add(attempt);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
       }
-      ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id", ttry.TopicId);
-      return View(ttry);
+      ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id", attempt.TopicId);
+      return View(attempt);
     }
 
-    // GET: Try/Edit/5
+    // GET: Attempt/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
       if (id == null)
@@ -80,23 +80,23 @@ namespace projeto.Controllers
         return NotFound();
       }
 
-      var ttry = await _context.Try.SingleOrDefaultAsync(m => m.Id == id);
-      if (ttry == null)
+      var attempt = await _context.Attempt.SingleOrDefaultAsync(m => m.Id == id);
+      if (attempt == null)
       {
         return NotFound();
       }
-      ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id", ttry.TopicId);
-      return View(ttry);
+      ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id", attempt.TopicId);
+      return View(attempt);
     }
 
-    // POST: Try/Edit/5
+    // POST: Attempt/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,ApplicationUserId,TopicId")] Try ttry)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,ApplicationUserId,TopicId")] Attempt attempt)
     {
-      if (id != ttry.Id)
+      if (id != attempt.Id)
       {
         return NotFound();
       }
@@ -105,12 +105,12 @@ namespace projeto.Controllers
       {
         try
         {
-          _context.Update(ttry);
+          _context.Update(attempt);
           await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-          if (!TryExists(ttry.Id))
+          if (!AttemptExists(attempt.Id))
           {
             return NotFound();
           }
@@ -121,11 +121,11 @@ namespace projeto.Controllers
         }
         return RedirectToAction(nameof(Index));
       }
-      ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id", ttry.TopicId);
-      return View(ttry);
+      ViewData["TopicId"] = new SelectList(_context.Topic, "Id", "Id", attempt.TopicId);
+      return View(attempt);
     }
 
-    // GET: Try/Delete/5
+    // GET: Attempt/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
       if (id == null)
@@ -133,31 +133,31 @@ namespace projeto.Controllers
         return NotFound();
       }
 
-      var ttry = await _context.Try
+      var attempt = await _context.Attempt
           .Include(t => t.topico)
           .SingleOrDefaultAsync(m => m.Id == id);
-      if (ttry == null)
+      if (attempt == null)
       {
         return NotFound();
       }
 
-      return View(ttry);
+      return View(attempt);
     }
 
-    // POST: Try/Delete/5
+    // POST: Attempt/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-      var ttry = await _context.Try.SingleOrDefaultAsync(m => m.Id == id);
-      _context.Try.Remove(ttry);
+      var attempt = await _context.Attempt.SingleOrDefaultAsync(m => m.Id == id);
+      _context.Attempt.Remove(attempt);
       await _context.SaveChangesAsync();
       return RedirectToAction(nameof(Index));
     }
 
-    private bool TryExists(int id)
+    private bool AttemptExists(int id)
     {
-      return _context.Try.Any(e => e.Id == id);
+      return _context.Attempt.Any(e => e.Id == id);
     }
   }
 }

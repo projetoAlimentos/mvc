@@ -25,7 +25,7 @@ namespace projeto.Data
     public DbSet<Question> Question { get; set; }
     public DbSet<Subject> Subject { get; set; }
     public DbSet<Topic> Topic { get; set; }
-    public DbSet<Try> Try { get; set; }
+    public DbSet<Attempt> Attempt { get; set; }
 
     public DbSet<projeto.Models.ResponsableSubject> ResponsableSubject { get; set; }
 
