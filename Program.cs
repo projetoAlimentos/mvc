@@ -24,7 +24,7 @@ namespace projeto
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    ApplicationDbInitializer.Initialize(context);
+                    ApplicationDbInitializer.Initialize(context, services);
                 }
                 catch (Exception ex)
                 {
