@@ -30,6 +30,14 @@ namespace projeto.Api
         }
 
 
+        // GET api/values
+        [HttpGet]
+        public IEnumerable<Module> GetAsync()
+        {
+            var moduleList = _context.Module;
+            return moduleList.ToList();
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<Module> Get(int id)

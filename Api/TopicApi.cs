@@ -29,6 +29,14 @@ namespace projeto.Api
           _context = context;
         }
 
+        // GET api/values
+        [HttpGet]
+        public IEnumerable<Topic> GetAsync()
+        {
+            var topicList = _context.Topic;
+            return topicList.ToList();
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<Topic> Get(int id)
