@@ -39,11 +39,19 @@ namespace projeto.Api
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<Topic> Get(int id)
+        public Task<List<Topic>> Get(int id)
         {
-            var topic = await _context.Topic
-                .SingleOrDefaultAsync(m => m.Id == id);
-            return topic;
+            var topicList = _context.Topic.Where(m => m.ModuleId == id);
+            return topicList.ToListAsync();
+        }
+
+                // GET api/values/5
+        [HttpGet("single/{id}")]
+        public Task<Topic> GetSingle(int id)
+        {
+            var topicList = _context.Topic
+                .Where(m => m.Id == id).SingleOrDefaultAsync();
+            return topicList;
         }
 
         // POST api/values

@@ -14,6 +14,9 @@ Vue.component('questao-item', {
             Ajuda
           </div>
           <div class="col">
+            Ativo
+          </div>
+          <div class="col">
             Opções
           </div>
         </div>
@@ -26,6 +29,9 @@ Vue.component('questao-item', {
           </div>
           <div class="col">
             <input class="form-control" type="text" v-model="questao.hint"/>
+          </div>
+          <div class="col">
+            <input class="" type="checkbox" v-model="questao.active"/>
           </div>
           <div class="col">
           <button class="btn btn-default" v-on:click="$emit('apagar')">Apagar</button>
@@ -86,7 +92,8 @@ new Vue(
     data: function () {
       return {
         questoes: [],
-        id: 0
+        id: -1,
+        topicId: -1
       }
     },
     created: function () {
@@ -95,14 +102,14 @@ new Vue(
     methods: {
       criarQuestao: function() {
         try {
-          var topicId = parseInt(window.location.pathname.match(/\/Topic\/([0-9])\/Question/)[1])
+          this.topicId = parseInt(window.location.pathname.match(/\/Topic\/([0-9])\/Question/)[1])
           this.questoes.push(
             {
               identificador: this.id,
               difficulty: 0,
               description: '',
               hint: '',
-              topicId: topicId,
+              topicId: this.topicId,
               idAnswers: 0,
               answers: [],
               batata: [
@@ -122,21 +129,21 @@ new Vue(
         this.id++
       },
       enviarQuestoes: function() {
-        console.log(this.questoes)
-        console.log(JSON.stringify(this.questoes))
         fetch('/api/QuestionApi/list', {
           headers: {
             'content-type': 'application/json'
           },
           body: JSON.stringify(this.questoes),
           method: 'POST'
-        }).then(data => console.log(data)).catch(err => console.log(err))
+        }).catch(err => console.log(err))
         this.questoes
       },
       fetchData: function() {
-        fetch('/api/QuestionApi')
+        this.topicId = parseInt(window.location.pathname.match(/\/Topic\/([0-9])\/Question/)[1])
+
+        fetch('/api/QuestionApi/admin/' + this.topicId)
           .then((resp) => resp.json())
-          .then((data) => this.questoes = data)
+          .then((data) => (this.questoes = data))
           .catch((err) => console.log(err))
       },
       apagar: function(index) {

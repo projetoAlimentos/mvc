@@ -40,11 +40,10 @@ namespace projeto.Api
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<Module> Get(int id)
+        public Task<List<Module>> Get(int id)
         {
-            var module = await _context.Module
-                .SingleOrDefaultAsync(m => m.Id == id);
-            return module;
+            var moduleList = _context.Module.Where(m => m.SubjectId == id);
+            return moduleList.ToListAsync();
         }
 
         // POST api/values

@@ -31,22 +31,34 @@ namespace projeto.Api
         }
 
         // GET api/values
-        [HttpGet]
-        public Task<List<Question>> GetAsync()
+        [HttpGet("{topicId}")]
+        public Task<List<Question>> GetAsync(int topicId)
         {
-            var questionList = _context.Question.Include(m => m.Answers);
+            var questionList = _context.Question
+                .Include(m => m.Answers)
+                .Where(x => x.TopicId == topicId)
+                .Where(x => x.Active == true);
             return questionList.ToListAsync();
         }
 
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public async Task<Question> Get(int id)
+        // GET api/values
+        [HttpGet("admin/{topicId}")]
+        public Task<List<Question>> GetAsyncAdmin(int topicId)
         {
-            var question = await _context.Question
-                .SingleOrDefaultAsync(m => m.Id == id);
-            return question;
+            var questionList = _context.Question
+                .Include(m => m.Answers)
+                .Where(x => x.TopicId == topicId);
+            return questionList.ToListAsync();
         }
+
+        // // GET api/values/5
+        // [HttpGet("{id}")]
+        // public async Task<Question> Get(int id)
+        // {
+        //     var question = await _context.Question
+        //         .SingleOrDefaultAsync(m => m.Id == id);
+        //     return question;
+        // }
 
         // POST api/values
         [HttpPost]
