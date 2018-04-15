@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using projeto.Data;
 using projeto.Models;
 using projeto.Models.AccountViewModels;
@@ -31,10 +32,10 @@ namespace projeto.Api
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Question> GetAsync()
+        public Task<List<Question>> GetAsync()
         {
-            var questionList = _context.Question;
-            return questionList.ToList();
+            var questionList = _context.Question.Include(m => m.Answers);
+            return questionList.ToListAsync();
         }
 
 
@@ -61,7 +62,11 @@ namespace projeto.Api
         {
             foreach (var question in questions)
             {
-                _context.Add(question);
+                // try{
+                    _context.Update(question);
+                // } catch (Exception e) {
+                    
+                // }
             }
             await _context.SaveChangesAsync();
         }
@@ -79,7 +84,12 @@ namespace projeto.Api
         public async void Delete(int id)
         {
             var question = await _context.Question
+                .Include(x => x.Answers)
                 .SingleOrDefaultAsync(m => m.Id == id);
+            
+            foreach (var ans in question.Answers) {
+                _context.Remove(ans);
+            }
             _context.Remove(question);
             await _context.SaveChangesAsync();
         }

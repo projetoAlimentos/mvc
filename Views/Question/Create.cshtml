@@ -11,9 +11,7 @@
 <div class="row">
     <div class="col-md-12">
         <div id="form-questao">
-            <questao-item v-for="item in questoes" v-bind:questao="item" v-bind:key="item.identificador">
-                
-            </questao-item>
+            <questao-item v-for="item in questoes" v-bind:questao="item" v-bind:key="item.identificador"></questao-item>
             <button type="button" class="btn btn-default" v-on:click="criarQuestao()">Adicionar Questão</button>
             <button type="button" class="btn btn-default" v-on:click="enviarQuestoes()">Salvar Questões</button>
         </div>
