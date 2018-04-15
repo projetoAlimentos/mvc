@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace projeto.Models
 {
+    [JsonObject(IsReference = true)]
     public class Topic
     {
         public int Id { get; set; }

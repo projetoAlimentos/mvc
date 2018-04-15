@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace projeto.Models
 {
+    [JsonObject(IsReference = true)]
     public class Answer
     {
         public int Id { get; set; }

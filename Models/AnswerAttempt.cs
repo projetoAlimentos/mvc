@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace projeto.Models
 {
+    [JsonObject(IsReference = true)]
     public class AnswerAttempt
     {
         public int Id { get; set; }
