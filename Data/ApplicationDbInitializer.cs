@@ -21,7 +21,7 @@ namespace projeto.Data
     {
         public static void Initialize(ApplicationDbContext context, IServiceProvider serviceProvider)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             context.SaveChanges();

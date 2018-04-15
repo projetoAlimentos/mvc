@@ -55,6 +55,17 @@ namespace projeto.Api
             await _context.SaveChangesAsync();
         }
 
+        // POST api/values
+        [HttpPost("list")]
+        public async void Post([FromBody] List<Question> questions)
+        {
+            foreach (var question in questions)
+            {
+                _context.Add(question);
+            }
+            await _context.SaveChangesAsync();
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public async void Put(int id, [FromBody]Question question)
