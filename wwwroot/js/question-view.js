@@ -120,7 +120,6 @@ new Vue(
                   mensagem: "pudim"
                 }
               ]
-            
             }
           )  
         } catch (error) {
@@ -135,8 +134,7 @@ new Vue(
           },
           body: JSON.stringify(this.questoes),
           method: 'POST'
-        }).catch(err => console.log(err))
-        this.questoes
+        }).then(() => this.fetchData()).catch(err => console.log(err))
       },
       fetchData: function() {
         this.topicId = parseInt(window.location.pathname.match(/\/Topic\/([0-9])\/Question/)[1])

@@ -18,7 +18,7 @@ using projeto.Services;
 
 namespace projeto.Api
 {
-
+    [Authorize("Bearer")]
     [Route("api/[controller]")]
     public class AttemptApi : Controller
     {

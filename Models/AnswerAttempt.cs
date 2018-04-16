@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -11,7 +12,9 @@ namespace projeto.Models
         public int? QuestionId { get; set; }
         public virtual Question Question { get; set; }
 
-        public virtual ICollection<Answer> Answers { get; set; }
+        public String Description { get; set; }
+
+        public virtual ICollection<Attempted> Attempted { get; set; }
 
         public Attempt Attempt { get; set; }
 

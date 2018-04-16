@@ -20,6 +20,7 @@ namespace projeto.Data
         public DbSet<IdentityRole> IdentityRole { get; set; }
         public DbSet<Answer> Answer { get; set; }
         public DbSet<AnswerAttempt> AnswerAttempt { get; set; }
+        public DbSet<Attempted> Attempted { get; set; }
         public DbSet<Article> Article { get; set; }
         public DbSet<Module> Module { get; set; }
         public DbSet<Question> Question { get; set; }
