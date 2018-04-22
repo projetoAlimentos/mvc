@@ -17,7 +17,7 @@ namespace projeto
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
-            
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -39,8 +39,13 @@ namespace projeto
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://192.168.0.103:5000", "http://localhost:5000")
+                .UseUrls("http://localhost:5000")
                 .UseStartup<Startup>()
                 .Build();
+
+            // WebHost.CreateDefaultBuilder(args)
+            //     .UseUrls("http://192.168.0.103:5000", "http://localhost:5000")
+            //     .UseStartup<Startup>()
+            //     .Build();
     }
 }
