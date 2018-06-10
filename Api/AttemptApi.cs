@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using projeto.Data;
 using projeto.Models;
 using projeto.Models.AccountViewModels;
@@ -39,19 +40,56 @@ namespace projeto.Api
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<Attempt> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var attempt = await _context.Attempt
+                .Include(x => x.AnswerAttempt)
+                    .ThenInclude(x => x.Attempts)
+                    .ThenInclude(x => x.Answer)
+                .Include(x => x.AnswerAttempt)
+                    .ThenInclude(x => x.Question)
+                    .ThenInclude(x => x.Answers)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            return attempt;
+
+            var acertos = 0;
+            var erros = 0;
+
+            // coisa horrivel para verificar os acertos
+            foreach (var answer in attempt.AnswerAttempt) {
+                var corretas = new HashSet<int>();
+                var usuario = new HashSet<int>();
+
+                foreach (var resposta in answer.Question.Answers) {
+                    if (resposta.Correct)
+                        corretas.Add(resposta.Id);
+                }
+                foreach (var tentativa in answer.Attempts)
+                {
+                    if (tentativa.Answer.Correct)
+                        usuario.Add(tentativa.Answer.Id);
+                }
+
+                var a = corretas.Except(usuario).ToList();
+                var b = usuario.Except(corretas).ToList();
+
+                if (!a.Any() && !b.Any())
+                    acertos++;
+                else
+                    erros++;
+            }
+
+            attempt.AnswerAttempt = null;
+
+            return Ok(new {attempt, acertos, erros});
         }
 
         // POST api/values
         [HttpPost]
-        public async void Post([FromBody]Attempt attempt)
+        public async Task<IActionResult> Post([FromBody]Attempt attempt)
         {
             _context.Add(attempt);
             await _context.SaveChangesAsync();
+            return Ok(new {idTentativa = attempt.Id});
         }
 
         // PUT api/values/5

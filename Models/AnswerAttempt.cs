@@ -14,7 +14,7 @@ namespace projeto.Models
 
         public String Description { get; set; }
 
-        public virtual ICollection<Attempted> Attempted { get; set; }
+        public virtual ICollection<Attempted> Attempts { get; set; }
 
         public Attempt Attempt { get; set; }
 

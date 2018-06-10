@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace projeto
 {
@@ -51,17 +53,17 @@ namespace projeto
                         paramsValidation.ValidAudience = tokenConfigurations.Audience;
                         paramsValidation.ValidIssuer = tokenConfigurations.Issuer;
 
-                // Valida a assinatura de um token recebido
-                paramsValidation.ValidateIssuerSigningKey = true;
+                        // Valida a assinatura de um token recebido
+                        paramsValidation.ValidateIssuerSigningKey = true;
 
-                // Verifica se um token recebido ainda é válido
-                paramsValidation.ValidateLifetime = true;
+                        // Verifica se um token recebido ainda é válido
+                        paramsValidation.ValidateLifetime = true;
 
-                // Tempo de tolerância para a expiração de um token (utilizado
-                // caso haja problemas de sincronismo de horário entre diferentes
-                // computadores envolvidos no processo de comunicação)
-                paramsValidation.ClockSkew = TimeSpan.Zero;
-            });
+                        // Tempo de tolerância para a expiração de um token (utilizado
+                        // caso haja problemas de sincronismo de horário entre diferentes
+                        // computadores envolvidos no processo de comunicação)
+                        paramsValidation.ClockSkew = TimeSpan.Zero;
+                    });
 
             // Ativa o uso do token como forma de autorizar o acesso
             // a recursos deste projeto
@@ -77,8 +79,14 @@ namespace projeto
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .AllowCredentials();
             }));
+
+            services.Configure<MvcOptions>(options => {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("MyPolicy"));
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseMySQL(Configuration.GetConnectionString("SampleyConnection")));
 
@@ -110,9 +118,9 @@ namespace projeto
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.Cookie.Expiration = TimeSpan.FromDays(150);
-                options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-                options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
 
@@ -127,6 +135,8 @@ namespace projeto
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
                 ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
+            app.UseCors("MyPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -136,7 +146,7 @@ namespace projeto
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseCors("MyPolicy");
+
             app.UseStaticFiles();
 
             app.UseAuthentication();

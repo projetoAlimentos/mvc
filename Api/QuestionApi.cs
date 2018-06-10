@@ -19,7 +19,7 @@ using projeto.Services;
 
 namespace projeto.Api
 {
-
+    [Authorize("Bearer")]
     [Route("api/[controller]")]
     public class QuestionApi : Controller
     {
@@ -77,7 +77,7 @@ namespace projeto.Api
                 // try{
                     _context.Update(question);
                 // } catch (Exception e) {
-                    
+
                 // }
             }
             await _context.SaveChangesAsync();
@@ -98,7 +98,7 @@ namespace projeto.Api
             var question = await _context.Question
                 .Include(x => x.Answers)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            
+
             foreach (var ans in question.Answers) {
                 _context.Remove(ans);
             }

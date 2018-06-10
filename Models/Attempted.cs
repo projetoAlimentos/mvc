@@ -9,10 +9,10 @@ namespace projeto.Models
     {
         public int Id { get; set; }
 
-        public int answerAttemptId { get; set; }
-        public virtual AnswerAttempt answerAttempt { get; set; }
+        public int AnswerAttemptId { get; set; }
+        public virtual AnswerAttempt AnswerAttempt { get; set; }
 
-        public int answerId { get; set; }
-        public virtual Answer answer { get; set; }
+        public int AnswerId { get; set; }
+        public virtual Answer Answer { get; set; }
     }
 }

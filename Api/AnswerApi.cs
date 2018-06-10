@@ -18,7 +18,7 @@ using projeto.Services;
 
 namespace projeto.Api
 {
-
+    [Authorize("Bearer")]
     [Route("api/[controller]")]
     public class AnswerApi : Controller
     {
@@ -26,9 +26,9 @@ namespace projeto.Api
 
         public AnswerApi(ApplicationDbContext context)
         {
-          _context = context;
+            _context = context;
         }
-        
+
         // GET api/values
         [HttpGet]
         public IEnumerable<Answer> GetAsync()
