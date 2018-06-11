@@ -21,13 +21,15 @@ namespace projeto.Controllers
         }
 
         // GET: Subject
-        [Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
+        //[Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
+        [HttpGet("/Subject")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Subject.ToListAsync());
         }
 
         // GET: Subject/Details/5
+        [HttpGet("/Subject/{SubjectId}")]
         public async Task<IActionResult> Details(int? SubjectId)
         {
             if (SubjectId == null)
@@ -46,6 +48,7 @@ namespace projeto.Controllers
         }
 
         // GET: Subject/Create
+        [HttpGet("/Subject/Create")]
         [Authorize(Roles = "Administrador,Professor")]
         public IActionResult Create()
         {
@@ -53,7 +56,7 @@ namespace projeto.Controllers
         }
 
         // POST: Subject/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Professor")]
@@ -88,7 +91,7 @@ namespace projeto.Controllers
         }
 
         // POST: Subject/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Professor")]

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
@@ -22,6 +23,9 @@ namespace projeto.Models
         public virtual ICollection<Answer> Answers { get; set; }
 
         public bool Active { get; set; }
+
+        [DefaultValue(false)]
+        public bool VerdadeiraFalsa { get; set; }
 
         public int? TopicId { get; set; }
         public virtual Topic Topic { get; set; }

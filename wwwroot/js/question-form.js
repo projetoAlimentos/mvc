@@ -109,9 +109,9 @@ new Vue(
                   mensagem: "pudim"
                 }
               ]
-            
+
             }
-          )  
+          )
         } catch (error) {
           alert("Deu muito ruim")
         }
@@ -120,7 +120,7 @@ new Vue(
       enviarQuestoes: function() {
         console.log(this.questoes)
         console.log(JSON.stringify(this.questoes))
-        fetch('/api/QuestionApi/list', {
+        fetch('/Question/list', {
           headers: {
             'content-type': 'application/json'
           },

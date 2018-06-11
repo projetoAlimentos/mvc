@@ -121,14 +121,14 @@ new Vue(
                 }
               ]
             }
-          )  
+          )
         } catch (error) {
           alert("Deu muito ruim")
         }
         this.id++
       },
       enviarQuestoes: function() {
-        fetch('/api/QuestionApi/list', {
+        fetch('/Question/list', {
           headers: {
             'content-type': 'application/json'
           },
@@ -139,7 +139,7 @@ new Vue(
       fetchData: function() {
         this.topicId = parseInt(window.location.pathname.match(/\/Topic\/([0-9])\/Question/)[1])
 
-        fetch('/api/QuestionApi/admin/' + this.topicId)
+        fetch('/Question/admin/' + this.topicId)
           .then((resp) => resp.json())
           .then((data) => (this.questoes = data))
           .catch((err) => console.log(err))
@@ -148,7 +148,7 @@ new Vue(
         var ctz = confirm('Tens certeza disso?');
 
         if (ctz === true) {
-          fetch('/api/QuestionApi/' + this.questoes[index].id, {
+          fetch('/Question/delete/' + this.questoes[index].id, {
             method: 'DELETE'
           }).then(this.questoes.splice(index, 1)).catch(err => console.log(err))
         }

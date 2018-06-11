@@ -135,7 +135,7 @@ namespace projeto
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
                 ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
-            app.UseCors("MyPolicy");
+
 
             if (env.IsDevelopment())
             {
@@ -150,6 +150,8 @@ namespace projeto
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseCors("MyPolicy");
 
             app.UseMvc(routes =>
             {

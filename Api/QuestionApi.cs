@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -38,6 +39,17 @@ namespace projeto.Api
                 .Include(m => m.Answers)
                 .Where(x => x.TopicId == topicId)
                 .Where(x => x.Active == true);
+
+
+            foreach (var questao in questionList)
+            {
+                var corretas = questao.Answers.Where(a => a.Correct);
+                if (corretas.Count() == 1)
+                    questao.VerdadeiraFalsa = true;
+                else
+                    questao.VerdadeiraFalsa = false;
+            }
+
             return questionList.ToListAsync();
         }
 

@@ -19,7 +19,7 @@
 <body>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/">projeto</a>
+        <a class="navbar-brand" href="/">bioq</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -62,7 +62,9 @@
                   </ul>
               </div>
             </li>
-
+            <li class="nav-item">
+              <a class="nav-link text-muted"  asp-controller="Subject" asp-action="Index">Tentativas</a>
+            </li>
             @*<li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#menu3" aria-expanded="false" aria-controls="multiCollapseExample1">Módulos</a>
               <div class="collapse multi-collapse" id="menu3">
@@ -142,8 +144,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    
-    
+
+
     @RenderSection("Scripts", required: false)
 
 </body>

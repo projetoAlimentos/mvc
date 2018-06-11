@@ -70,7 +70,7 @@ namespace projeto.Controllers
         }
 
         // POST: Question/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Create")]
         [ValidateAntiForgeryToken]
@@ -108,7 +108,7 @@ namespace projeto.Controllers
         }
 
         // POST: Question/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question/Edit/{QuestionId}")]
         [ValidateAntiForgeryToken]
@@ -180,6 +180,84 @@ namespace projeto.Controllers
         private bool QuestionExists(int id)
         {
             return _context.Question.Any(e => e.Id == id);
+        }
+
+        // GET api/values
+        [HttpGet("/Question/{topicId}")]
+        [Authorize(Roles = "Administrador,Professor")]
+        public Task<List<Question>> GetAsyncJson(int topicId)
+        {
+            var questionList = _context.Question
+                .Include(m => m.Answers)
+                .Where(x => x.TopicId == topicId)
+                .Where(x => x.Active == true);
+            return questionList.ToListAsync();
+        }
+
+        // GET api/values
+        [HttpGet("/Question/admin/{topicId}")]
+        [Authorize(Roles = "Administrador,Professor")]
+        public Task<List<Question>> GetAsyncAdminJson(int topicId)
+        {
+            var questionList = _context.Question
+                .Include(m => m.Answers)
+                .Where(x => x.TopicId == topicId);
+            return questionList.ToListAsync();
+        }
+
+        // // GET api/values/5
+        // [HttpGet("{id}")]
+        // public async Task<Question> Get(int id)
+        // {
+        //     var question = await _context.Question
+        //         .SingleOrDefaultAsync(m => m.Id == id);
+        //     return question;
+        // }
+
+        // POST api/values
+        [HttpPost("/Question")]
+        [Authorize(Roles = "Administrador,Professor")]
+        public async void PostJson([FromBody]Question question)
+        {
+            _context.Add(question);
+            await _context.SaveChangesAsync();
+        }
+
+        // POST api/values
+        [HttpPost("/Question/list")]
+        [Authorize(Roles = "Administrador,Professor")]
+        public async void PostJson([FromBody] List<Question> questions)
+        {
+            foreach (var question in questions)
+            {
+                _context.Update(question);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        // PUT api/values/5
+        [HttpPut("/Question/edit/{id}")]
+        [Authorize(Roles = "Administrador,Professor")]
+        public async void PutJson(int id, [FromBody]Question question)
+        {
+            _context.Update(question);
+            await _context.SaveChangesAsync();
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("/Question/delete/{id}")]
+        [Authorize(Roles = "Administrador,Professor")]
+        public async void DeleteJson(int id)
+        {
+            var question = await _context.Question
+                .Include(x => x.Answers)
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            foreach (var ans in question.Answers) {
+                _context.Remove(ans);
+            }
+            _context.Remove(question);
+            await _context.SaveChangesAsync();
         }
     }
 }

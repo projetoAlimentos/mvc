@@ -57,7 +57,7 @@ namespace projeto.Data
                 var createPowerUser = await UserManager.CreateAsync(poweruser, UserPassword);
                 if (createPowerUser.Succeeded)
                 {
-                    //here we tie the new user to the "Admin" role 
+                    //here we tie the new user to the "Admin" role
                     await UserManager.AddToRoleAsync(poweruser, "Administrador");
                 }
             }

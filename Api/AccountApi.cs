@@ -131,6 +131,7 @@ namespace projeto.Api
 
                 return new
                 {
+                    idUsuario = applicationUser.Id,
                     authenticated = true,
                     created = dataCriacao.ToString("yyyy-MM-dd HH:mm:ss"),
                     expiration = dataExpiracao.ToString("yyyy-MM-dd HH:mm:ss"),

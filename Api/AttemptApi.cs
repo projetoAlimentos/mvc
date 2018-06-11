@@ -56,8 +56,8 @@ namespace projeto.Api
 
             // coisa horrivel para verificar os acertos
             foreach (var answer in attempt.AnswerAttempt) {
-                var corretas = new HashSet<int>();
-                var usuario = new HashSet<int>();
+                var corretas = new List<int>();
+                var usuario = new List<int>();
 
                 foreach (var resposta in answer.Question.Answers) {
                     if (resposta.Correct)
@@ -65,14 +65,13 @@ namespace projeto.Api
                 }
                 foreach (var tentativa in answer.Attempts)
                 {
-                    if (tentativa.Answer.Correct)
-                        usuario.Add(tentativa.Answer.Id);
+                    usuario.Add(tentativa.Answer.Id);
                 }
 
-                var a = corretas.Except(usuario).ToList();
-                var b = usuario.Except(corretas).ToList();
+                var a = corretas.Except(usuario);
+                var b = usuario.Except(corretas);
 
-                if (!a.Any() && !b.Any())
+                if (a.Count() == b.Count() && a.Count() == 0)
                     acertos++;
                 else
                     erros++;
