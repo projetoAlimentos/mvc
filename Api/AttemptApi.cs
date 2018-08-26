@@ -42,6 +42,10 @@ namespace projeto.Api
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
+            return Ok(await GenerateAns(id));
+        }
+
+        public async Task<Object> GenerateAns(int id) {
             var attempt = await _context.Attempt
                 .Include(x => x.AnswerAttempt)
                     .ThenInclude(x => x.Attempts)
@@ -55,31 +59,32 @@ namespace projeto.Api
             var erros = 0;
 
             // coisa horrivel para verificar os acertos
-            foreach (var answer in attempt.AnswerAttempt) {
+            foreach (var answer in attempt.AnswerAttempt)
+            {
                 var corretas = new List<int>();
                 var usuario = new List<int>();
 
-                foreach (var resposta in answer.Question.Answers) {
-                    if (resposta.Correct)
-                        corretas.Add(resposta.Id);
+                foreach (var resposta in answer.Question.Answers)
+                {
+                if (resposta.Correct)
+                    corretas.Add(resposta.Id);
                 }
                 foreach (var tentativa in answer.Attempts)
                 {
-                    usuario.Add(tentativa.Answer.Id);
+                usuario.Add(tentativa.Answer.Id);
                 }
 
                 var a = corretas.Except(usuario);
                 var b = usuario.Except(corretas);
 
                 if (a.Count() == b.Count() && a.Count() == 0)
-                    acertos++;
+                acertos++;
                 else
-                    erros++;
+                erros++;
             }
 
             attempt.AnswerAttempt = null;
-
-            return Ok(new {attempt, acertos, erros});
+            return new { attempt, acertos, erros };
         }
 
         // POST api/values

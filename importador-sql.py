@@ -1,20 +1,20 @@
 #!python3
 import csv
 import sys
-filename = 'projeto-modulo-3.csv'
+filename = 'Planilha-Testecomdificuldades.csv'
 
 subjectId = 2
 moduleId = 2
 topicId = 1
 
 sql = '''INSERT INTO `projeto`.`Subject` (`Id`, `Description`, `Name`)
-    VALUES ( {:d} , 'Descrição da Matéria' , 'Nome da Matéria' );'''.format(subjectId)
+    VALUES ( {:d} , 'Descrição da Matéria' , 'Ficar Grandao' );'''.format(subjectId)
 
-sql = sql + '''INSERT INTO `projeto`.`Module`(`Id`, `Active`, `Description`, `Name`, `SubjectId`) 
-    VALUES ({:d}, 1, 'Modulo 3', 'Modulo 3', {:d}); '''.format(moduleId, subjectId)
+sql = sql + '''INSERT INTO `projeto`.`Module`(`Id`, `Active`, `Description`, `Name`, `SubjectId`)
+    VALUES ({:d}, 1, 'Modulo 1', 'Modulo 1', {:d}); '''.format(moduleId, subjectId)
 
-sql = sql + '''INSERT INTO `projeto`.`Topic` (`Id`, `Active`, `Description`, `Difficulty`, `ModuleId`, `Name`) 
-    VALUES ({:d}, 1, 'Catabolismo A.G.', 1, {:d}, 'Catabolismo A.G.'); '''.format(topicId, moduleId)
+sql = sql + '''INSERT INTO `projeto`.`Topic` (`Id`, `Active`, `Description`, `Difficulty`, `ModuleId`, `Name`)
+    VALUES ({:d}, 1, 'Proteinas', 1, {:d}, 'Proteinas'); '''.format(topicId, moduleId)
 
 optionMap = {
     'a': 1,
@@ -38,7 +38,7 @@ with open(filename, 'rt') as f:
             #pergunta
             sql = sql + '''INSERT INTO `projeto`.`Question` (`Id`, `Active`, `Description`, `Difficulty`, `Hint`, `TopicId`)
     VALUES({:d}, 1, "{:s}", {:d}, null, {:d}); '''.format(QuestionId, row[0], int(row[6]) if row[6] != "" else 1, topicId)
-            
+
             #row[0] => pergunta
 
             #row[1] => resposta
@@ -53,7 +53,7 @@ with open(filename, 'rt') as f:
             for resposta in range(1,5):
                 if row[resposta] != "":
                     sql = sql + '''INSERT INTO `projeto`.`Answer`(`Correct`,`Description`,`QuestionId`)
-        VALUES({:d},'{:s}',{:d}); 
+        VALUES({:d},'{:s}',{:d});
                         '''.format(1 if resposta == optionMap[row[5]] else 0, row[resposta], QuestionId)
 
         print("Ok")

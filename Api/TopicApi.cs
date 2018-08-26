@@ -39,11 +39,44 @@ namespace projeto.Api
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Task<List<Topic>> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var topicList = _context.Topic.Where(m => m.ModuleId == id);
-            return topicList.ToListAsync();
+            var topicList = _context.Topic
+                .Where(m => m.ModuleId == id)
+                .ToList();
+
+            var attAPI = new AttemptApi(_context);
+            var topics = new List<Object>();
+
+            foreach (var topic in topicList)
+            {
+
+                var attemptList = _context.Attempt
+                    .Where(a => a.TopicId == topic.Id)
+                    .ToList();
+
+                int acertosMax = 0;
+                int errosMax = 0;
+
+                foreach (var attempt in attemptList)
+                {
+                    var attemptStuff = await attAPI.GenerateAns(topic.Id);
+                    var acertos = attemptStuff.GetType().GetProperty("acertos").GetValue(attemptStuff, null);
+                    var erros = attemptStuff.GetType().GetProperty("erros").GetValue(attemptStuff, null);
+
+                    // Pega o índice 1 do objeto anonimo
+                    if ((int) acertos > acertosMax || acertosMax == 0) {
+                        acertosMax = (int)acertos;
+                        errosMax = (int)erros;
+                    }
+                }
+
+                topics.Add(new {topic, acertosMax, errosMax});
+            }
+
+            return Ok(topics);
         }
+
 
                 // GET api/values/5
         [HttpGet("single/{id}")]

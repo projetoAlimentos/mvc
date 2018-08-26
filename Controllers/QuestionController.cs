@@ -24,7 +24,7 @@ namespace projeto.Controllers
         // GET: Question
         [HttpGet("/Subject/{SubjectId}/Module/{ModuleId}/Topic/{TopicId}/Question")]
         [Authorize(Roles = "Administrador,Professor,Assistente,Aluno")]
-        public async Task<IActionResult> Index(int? TopicId)
+        public async Task<IActionResult> Index(int? TopicId, int? ModuleId)
         {
             if (TopicId == null)
             {
@@ -33,6 +33,9 @@ namespace projeto.Controllers
             }
             else
             {
+                ViewData["ModuleId"] = ModuleId;
+                ViewData["TopicId"] = TopicId;
+
                 var applicationDbContext = _context.Question.Include(q => q.Topic).Include(q => q.Topic.Module).
                         Where(q => q.TopicId == TopicId);
                 return View(await applicationDbContext.ToListAsync());

@@ -33,13 +33,27 @@ namespace projeto.Api
 
         // GET api/values
         [HttpGet("{topicId}")]
-        public Task<List<Question>> GetAsync(int topicId)
+        public List<Question> GetAsync(int topicId)
         {
+            var random = new Random("penis".GetHashCode());
             var questionList = _context.Question
                 .Include(m => m.Answers)
                 .Where(x => x.TopicId == topicId)
-                .Where(x => x.Active == true);
+                .Where(x => x.Active == true)
+                .ToList();
 
+            var rng = new Random();
+            int n = questionList.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                var value = questionList[k];
+                questionList[k] = questionList[n];
+                questionList[n] = value;
+            }
+
+            questionList = questionList.GetRange(0, 5);
 
             foreach (var questao in questionList)
             {
@@ -50,7 +64,7 @@ namespace projeto.Api
                     questao.VerdadeiraFalsa = false;
             }
 
-            return questionList.ToListAsync();
+            return questionList;
         }
 
         // GET api/values
