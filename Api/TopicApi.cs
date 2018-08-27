@@ -23,10 +23,14 @@ namespace projeto.Api
     public class TopicApi : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TopicApi(ApplicationDbContext context)
+        public TopicApi(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager)
         {
-          _context = context;
+            _context = context;
+            _userManager = userManager;
         }
 
         // GET api/values
@@ -43,16 +47,18 @@ namespace projeto.Api
         {
             var topicList = _context.Topic
                 .Where(m => m.ModuleId == id)
-                .ToList();
+                .ToList()
+                .OrderBy(t => t.Order);
 
             var attAPI = new AttemptApi(_context);
             var topics = new List<Object>();
 
             foreach (var topic in topicList)
             {
+                var userId = HttpContext.User.Identity.Name;
 
                 var attemptList = _context.Attempt
-                    .Where(a => a.TopicId == topic.Id)
+                    .Where(a => a.TopicId == topic.Id && a.User.Id == userId)
                     .ToList();
 
                 int acertosMax = 0;
@@ -60,7 +66,7 @@ namespace projeto.Api
 
                 foreach (var attempt in attemptList)
                 {
-                    var attemptStuff = await attAPI.GenerateAns(topic.Id);
+                    var attemptStuff = await attAPI.GenerateAns(attempt.Id);
                     var acertos = attemptStuff.GetType().GetProperty("acertos").GetValue(attemptStuff, null);
                     var erros = attemptStuff.GetType().GetProperty("erros").GetValue(attemptStuff, null);
 

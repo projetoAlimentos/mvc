@@ -25,8 +25,11 @@ namespace projeto.Models
         [Display(Name="Ativo")]
         public bool Active { get; set; }
 
-        [Display(Name="Dificuldade")]
+        [Display(Name = "Dificuldade")]
         public int Difficulty { get; set; }
+
+        [Display(Name = "Ordem")]
+        public int? Order { get; set; }
     }
 }
 

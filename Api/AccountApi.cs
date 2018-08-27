@@ -27,11 +27,18 @@ namespace projeto.Api
     {
         private readonly ApplicationDbContext _context;
 
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountApi(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager)
+        public AccountApi(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
+
             _context = context;
         }
 
@@ -141,12 +148,54 @@ namespace projeto.Api
             }
             else
             {
-                return new
-                {
-                    authenticated = false,
-                    message = "Falha ao autenticar"
-                };
+                return StatusCode(401);
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<Object> Register(
+            [FromBody]RegisterViewModel model,
+            [FromServices]SigningConfigurations signingConfigurations,
+            [FromServices]TokenConfigurations tokenConfigurations)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.Name
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                await _userManager.AddToRoleAsync(user, "Aluno");
+                await _context.SaveChangesAsync();
+                if (result.Succeeded)
+                {
+                    var loginModel = new LoginViewModel();
+                    loginModel.Email = model.Email;
+                    loginModel.Password = model.Password;
+
+                    return await Post(loginModel,
+                        signingConfigurations,
+                        tokenConfigurations);
+
+                } else {
+                    return new ContentResult
+                    {
+                        Content = $"Error: {result.Errors}",
+                        ContentType = "application/json",
+                        // change to whatever status code you want to send out
+                        StatusCode = 400
+                    };
+                }
+
+            }
+
+      // If we got this far, something failed, redisplay form
+            return StatusCode(500);
         }
     }
 }

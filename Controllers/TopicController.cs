@@ -71,12 +71,12 @@ namespace projeto.Controllers
         }
 
         // POST: Topic/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Professor")]
-        public async Task<IActionResult> Create(int? ModuleId, [Bind("Id,Name,Description,ModuleId,Active,Difficulty")] Topic topic)
+        public async Task<IActionResult> Create(int? ModuleId, [Bind("Id,Name,Description,ModuleId,Active,Difficulty,Order")] Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -109,12 +109,12 @@ namespace projeto.Controllers
         }
 
         // POST: Topic/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("/Subject/{SubjectId}/Module/{ModuleId}/Topic/Edit/{TopicId}")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador,Professor")]
-        public async Task<IActionResult> Edit(int TopicId, [Bind("Id,Name,Description,ModuleId,Active,Difficulty")] Topic topic)
+        public async Task<IActionResult> Edit(int TopicId, [Bind("Id,Name,Description,ModuleId,Active,Difficulty,Order")] Topic topic)
         {
             if (TopicId != topic.Id)
             {
