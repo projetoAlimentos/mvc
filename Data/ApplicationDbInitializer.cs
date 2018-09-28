@@ -48,7 +48,8 @@ namespace projeto.Data
             var poweruser = new ApplicationUser
             {
                 UserName = "admin@admin.com",
-                Email = "admin@admin.com"
+                Email = "admin@admin.com",
+                Name = "Administrador"
             };
             string UserPassword = "P@ssw0rd";
             var _user = await UserManager.FindByEmailAsync("admin@admin.com");

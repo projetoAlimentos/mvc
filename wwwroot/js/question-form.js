@@ -28,7 +28,7 @@ Vue.component('questao-item', {
             <input class="form-control" type="text" v-model="questao.hint"/>
           </div>
           <div class="col">
-            <button class="btn btn-default" v-on:click="criarOpcao()">Add Opcao</button>
+            <button class="btn btn-default" v-on:click="criarOpcao()">Adicionar Opção</button>
           </div>
         </div>
         <opcao-item v-for="ans in questao.answers" v-bind:answer="ans" :key="ans.identificador"></opcao-item>
@@ -113,7 +113,8 @@ new Vue(
             }
           )
         } catch (error) {
-          alert("Deu muito ruim")
+          console.error(error)
+          //alert("Deu muito ruim")
         }
         this.id++
       },
