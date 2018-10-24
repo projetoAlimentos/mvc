@@ -129,7 +129,7 @@ new Vue(
         this.id++
       },
       enviarQuestoes: function() {
-        fetch('/Question/list', {
+        fetch('/admin/Question/list', {
           headers: {
             'content-type': 'application/json'
           },
@@ -140,7 +140,7 @@ new Vue(
       fetchData: function() {
         this.topicId = parseInt(window.location.pathname.match(/\/Topic\/([0-9])\/Question/)[1])
 
-        fetch('/Question/admin/' + this.topicId)
+        fetch('/admin/Question/admin/' + this.topicId)
           .then((resp) => resp.json())
           .then((data) => (this.questoes = data))
           .catch((err) => console.log(err))
@@ -149,7 +149,7 @@ new Vue(
         var ctz = confirm('Tens certeza disso?');
 
         if (ctz === true) {
-          fetch('/Question/delete/' + this.questoes[index].id, {
+          fetch('/admin/Question/delete/' + this.questoes[index].id, {
             method: 'DELETE'
           }).then(this.questoes.splice(index, 1)).catch(err => console.log(err))
         }

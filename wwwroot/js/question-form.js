@@ -121,7 +121,7 @@ new Vue(
       enviarQuestoes: function() {
         console.log(this.questoes)
         console.log(JSON.stringify(this.questoes))
-        fetch('/Question/list', {
+        fetch('/admin/Question/list', {
           headers: {
             'content-type': 'application/json'
           },
